@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>JavaScript Coding Interview Questions</title>
+		<meta name="author" content="Alexander Kuznecov" />
+		<link rel="stylesheet" href="./assets/style.css" />
+		<script src="https://kit.fontawesome.com/39bbe9b596.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<main class="main">
+			<div class="main__container container">
+				<div class="main__inner">
+					<div class="main__info">
+						<h1 class="title">Top JavaScript Coding Interview Questions</h1>
+					</div>
+					<div class="main__task">
+						<div class="main__task--area">
+							<label for="test">Choose a exercise:</label>
+							<select name="test" id="test" onchange="selectTest(this.value)">
+								<option value="0" selected></option>
+								<option value="1">1 - sum</option>
+								<option value="2">2 - max value</option>
+								<option value="3">3 - palindrome</option>
+								<option value="4">4 - string reverse</option>
+								<option value="5">5 - even numbers</option>
+								<option value="6">6 - factorial</option>
+								<option value="7">7 - prime number</option>
+								<option value="8">8 - Fibonacci</option>
+								<option value="9">9 - case convert</option>
+							</select>
+							<div class="main__area--enter">
+								<div class="InputsArea"></div>
+								<button onclick="solve()" id="resultSubmitBtn" type="button">Find</button>
+							</div>
+							<textarea readonly id="textArea" cols="40" rows="10">>> Enter values for result solving.</textarea>
+						</div>
+					</div>
+					<a href="./assets/flowchart.png" target="_blank">Flowchart x</a>
+				</div>
+			</div>
+		</main>
+		<!-- /.main -->
+
+		<footer class="footer"> Made by Alexander Kuznecov 2024 &copy; </footer>
+		<!-- /.footer -->
+
+		<!-- script -->
+		<script src="./assets/scripts.js"></script>
+	</body>
+</html>
