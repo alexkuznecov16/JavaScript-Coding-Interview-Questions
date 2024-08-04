@@ -38,6 +38,10 @@ const data = [
 		code: `<label for="userText">Enter text:</label>
     <input class='peleks' value='Hello, my name is Alex.' id='input1' type="text"><label><input type="radio" id="case1" name="option" value="lower" checked>Lower</label><label><input type="radio" id="case2" name="option" value="upper">Upper</label><label><input type="radio" id="case1" name="option" value="normal" checked>Normal</label>`,
 	},
+	{
+		code: `<label for="userText">Enter array of numbers:</label>
+    <input class='peleks' value='1,2,3,4,6,8,3,2' id='input1' type="text">`,
+	},
 ];
 
 // Select test by <select> in html
@@ -131,17 +135,23 @@ const solve = () => {
 
 		// Case convert
 		case 9:
-			const convertedText = caseConvert(string);
+			const convertedText = caseConvert(string); // change all chars case
 
-			result(convertedText[0], convertedText[1]);
+			result(convertedText[0], convertedText[1]); // send result
 			break;
+
+		// Statistics average
+		case 10:
+			const averageValues = statisticsAverage(numbersArray); // do statistics average values
+
+			result(averageValues[0], averageValues[1]);
 	}
 };
 
 // Write result in a textarea
 const result = (text, isTrue) => {
 	const field = document.getElementsByTagName('textarea')[0]; // html field for result
-	field.value = `>>${text}`; // print result in a textarea
+	field.value = `>> ${text}`; // print result in a textarea
 	if (isTrue) {
 		field.style.color = 'green'; // valid data
 	} else {
@@ -239,25 +249,50 @@ const Fibonacci = number => {
 
 // Test 9
 const caseConvert = text => {
-	const options = document.querySelectorAll('input[name="option"]');
-	let selectedOption;
-	let result = '';
+	const options = document.querySelectorAll('input[name="option"]'); // all options from html DOM
+	let selectedOption; // variable for selectedOption
+	let result = ''; // variable for result
 
 	options.forEach(option => {
 		if (option.checked) {
-			selectedOption = option.value;
+			// if option is checked
+			selectedOption = option.value; // add this option value to selectedOption
 		}
 	});
 
 	if (selectedOption == 'upper') {
-		result = [`Your converted text: ${text.toUpperCase()}`, true];
+		result = [`Your converted text: ${text.toUpperCase()}`, true]; // uppercase
 	} else if (selectedOption == 'lower') {
-		result = [`Your converted text: ${text.toLowerCase()}`, true];
+		result = [`Your converted text: ${text.toLowerCase()}`, true]; // lowercase
 	} else if (selectedOption == 'normal') {
-		result = [`Your converted text: ${text}`, true];
+		result = [`Your converted text: ${text}`, true]; // normal
 	} else {
-		result = [`Your text has some errors, please check it out`, false];
+		result = [`Your text has some errors, please check it out`, false]; // error
 	}
 
 	return result;
+};
+
+// Test 10
+const statisticsAverage = array => {
+	if (array.length <= 1) {
+		return ['Please enter some numbers (min: 2)', false];
+	}
+	const increasingArray = array.sort(); // array (a - b) sequence
+	const decreasingArray = array.sort((a, b) => b - a); // array (b - a) sequence
+	let arraySum = 0; // all array numbers sum
+	let arrayMultiply = 1; // all array number multiply
+	let arrayQuadraticSum = 0;
+
+	for (let x = 0; x < array.length; x++) {
+		arraySum += array[x]; // add num to arraySum
+		arrayMultiply *= array[x]; // multiply num to arrayMultiply
+		arrayQuadraticSum += array[x] ** 2;
+
+		if (isNaN(array[x])) {
+			return ['Your array of numbers has some errors, please check it out', false]; // return error
+		}
+	}
+
+	return [`Increasing: ${JSON.stringify(increasingArray)}\n>> Decreasing: ${JSON.stringify(decreasingArray)}\n>> Sum: ${arraySum}\n>> Multiply: ${arrayMultiply}\n>> Average algebraic: ${arraySum / array.length}\n>> Average geometric: ${Math.pow(arrayMultiply, 1 / array.length).toFixed(2)}\n>> Average quadratic: ${Math.sqrt(arrayQuadraticSum / array.length).toFixed(2)}`, true]; // return result
 };
