@@ -24,8 +24,7 @@ approach used to solve the palindrome problem.
 Hiring managers are expecting an accurate solution that demonstrates the interviewee’s
 proficiency in JavaScript programming.
 
-## 5. Write a JavaScript function that takes an array of numbers and returns a new array with only
-the even numbers.
+## 5. Write a JavaScript function that takes an array of numbers and returns a new array with only the even numbers.
 Interviewers are looking for candidates who can not only clearly explain the solution along with
 the code, but also show the ability to think logically and articulate their thought processes.
 
@@ -42,7 +41,6 @@ concepts. They expect the candidate to translate a mathematical concept into fun
 This question helps hiring managers assess the interviewee’s understanding of fundamental
 algorithms in JavaScript. They expect the candidate to consider edge cases and handle errors.
 
-## 9. Write a JavaScript program to convert a string to title case (capitalize the first letter of each
-word).
+## 9. Write a JavaScript program to convert a string to title case (capitalize the first letter of each word).
 Interviewers analyze the candidate’s ability to break down a problem into manageable steps and
 demonstrate knowledge of string manipulation, looping, and basic JavaScript functions.
