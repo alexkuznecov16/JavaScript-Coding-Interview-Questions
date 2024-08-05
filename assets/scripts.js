@@ -49,6 +49,10 @@ const data = [
 	{
 		code: `<p>Click the button to get current date</p><button type="button" onclick="solve(true)">Stop time</button>`,
 	},
+	{
+		code: `<label for="userText">Enter number:</label>
+    <input class='peleks' value='123' id='input1' type="number" min="1">`,
+	},
 ];
 
 let dateInterval = null;
@@ -179,6 +183,12 @@ const solve = x => {
 				result(nowDate[0], nowDate[1]);
 			}, 1000);
 			break;
+
+		// Armstrong number
+		case 13:
+			const solveArmstrong = Armstrong(number);
+
+			result(solveArmstrong[0], solveArmstrong[1]);
 	}
 };
 
@@ -378,4 +388,24 @@ const getDate = () => {
 	const currentSeconds = (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
 
 	return [currentDay + '/' + currentMonth + '/' + currentYear + '\n>> ' + currentHours + ':' + currentMinutes + ':' + currentSeconds, true];
+};
+
+// Test 13
+const Armstrong = number => {
+	if (number <= 2 || isNaN(number)) {
+		return ['Please enter correct number at least 3 numbers', false];
+	}
+
+	const numberArray = number.toString().split('').map(Number);
+	let result = 0;
+
+	for (let t = 0; t < numberArray.length; t++) {
+		result += Math.pow(numberArray[t], numberArray.length);
+	}
+
+	if (result == number) {
+		return [`${number} is an Armstrong number`, true];
+	} else {
+		return [`${number} is not an Armstrong number`, false];
+	}
 };
