@@ -47,9 +47,11 @@ const data = [
     <input class='peleks' value='Something...' id='input1' type="text">`,
 	},
 	{
-		code: `<p>Click the button to get current date</p>`,
+		code: `<p>Click the button to get current date</p><button type="button" onclick="solve(true)">Stop time</button>`,
 	},
 ];
+
+let dateInterval = null;
 
 // Select test by <select> in html
 const selectTest = testIndex => {
@@ -68,7 +70,7 @@ const selectTest = testIndex => {
 };
 
 // Test solving
-const solve = () => {
+const solve = x => {
 	const testNum = parseInt(document.getElementsByTagName('select')[0].value); // get selected test index
 	if (testNum <= 0) {
 		result('Error, please choose correct exercise', false); // error
@@ -163,9 +165,20 @@ const solve = () => {
 
 		// Get current date (dd/mm/yyyy)
 		case 12:
-			const nowDate = getDate();
+			if (x === true && dateInterval) {
+				// Clear the interval if x is true and dateInterval exists
+				clearInterval(dateInterval);
+				dateInterval = null; // reset the interval ID
+				result('Time is stopped', true);
+				return;
+			}
 
-			result(nowDate[0], nowDate[1]);
+			let nowDate;
+			dateInterval = setInterval(() => {
+				nowDate = getDate();
+				result(nowDate[0], nowDate[1]);
+			}, 1000);
+			break;
 	}
 };
 
@@ -352,6 +365,17 @@ const textAnalysis = text => {
 
 // Test 12
 const getDate = () => {
-	const currentDate = new Date();
-	return [(currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate() + '/' + (currentDate.getMonth() < 10 ? '0' : '') + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear(), true];
+	let currentDate = new Date(); // current date data
+
+	// current date variables
+	const currentDay = (currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate();
+	const currentMonth = (currentDate.getMonth() < 10 ? '0' : '') + (currentDate.getMonth() + 1);
+	const currentYear = currentDate.getFullYear();
+
+	// current time variables
+	const currentHours = (currentDate.getHours() < 10 ? '0' : '') + currentDate.getHours();
+	const currentMinutes = (currentDate.getMinutes() < 10 ? '0' : '') + currentDate.getMinutes();
+	const currentSeconds = (currentDate.getSeconds() < 10 ? '0' : '') + currentDate.getSeconds();
+
+	return [currentDay + '/' + currentMonth + '/' + currentYear + '\n>> ' + currentHours + ':' + currentMinutes + ':' + currentSeconds, true];
 };
