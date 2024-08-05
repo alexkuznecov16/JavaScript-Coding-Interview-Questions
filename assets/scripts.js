@@ -46,6 +46,9 @@ const data = [
 		code: `<label for="userText">Enter text:</label>
     <input class='peleks' value='Something...' id='input1' type="text">`,
 	},
+	{
+		code: `<p>Click the button to get current date</p>`,
+	},
 ];
 
 // Select test by <select> in html
@@ -72,10 +75,10 @@ const solve = () => {
 		return;
 	}
 	// basic variables for work
-	const input1 = document.getElementById('input1').value; // each time we have at least one input, therefore we can get it's value here
+	const input1 = document.getElementById('input1')?.value; // each time we have at least one input, therefore we can get it's value here
 	const number = parseInt(input1); // in our cases (switch - case) we have at least one case with numbers
 	const string = input1; // string variable
-	const numbersArray = input1.split(',').map(Number); // numbers array after mapping
+	const numbersArray = input1?.split(',').map(Number); // numbers array after mapping
 	// conditional statements
 	switch (testNum) {
 		// Sum
@@ -157,6 +160,12 @@ const solve = () => {
 
 			result(analysisResult[0], analysisResult[1]);
 			break;
+
+		// Get current date (dd/mm/yyyy)
+		case 12:
+			const nowDate = getDate();
+
+			result(nowDate[0], nowDate[1]);
 	}
 };
 
@@ -326,9 +335,23 @@ const textAnalysis = text => {
 		return ['Please enter text of at least 5 characters', false];
 	}
 
+	let charsCount = 0; // count of characters in a string
+	const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''); // array of alphabet characters
+
 	for (let u = 0; u < text.length; u++) {
 		if (text[u] in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) return ['Please enter text of at least 5 characters (numbers are not allowed)', false];
+		for (let p = 0; p < alphabet.length; p++) {
+			if (text[u] == alphabet[p]) {
+				charsCount++;
+			}
+		}
 	}
 
-	return [`Your text: ${text}\n>> Text length: ${text.length}`, true];
+	return [`Your text: ${text}\n>> Text length: ${text.length}\n>> Lower case: ${text.toLowerCase()}\n>> Upper case: ${text.toUpperCase()}\n>> Chars count: ${charsCount}\n>> Reverse: ${text.split('').reverse().join('')}\n>> Array: ${JSON.stringify(text.split(''))}\n>> First letter: ${text[0]}\n>> Latest letter: ${text[text.length - 1]}\n>> Without dots: ${text.replace(/\./g, '')}`, true];
+};
+
+// Test 12
+const getDate = () => {
+	const currentDate = new Date();
+	return [(currentDate.getDate() < 10 ? '0' : '') + currentDate.getDate() + '/' + (currentDate.getMonth() < 10 ? '0' : '') + (currentDate.getMonth() + 1) + '/' + currentDate.getFullYear(), true];
 };
