@@ -42,6 +42,10 @@ const data = [
 		code: `<label for="userText">Enter array of numbers:</label>
     <input class='peleks' value='1,2,3,4,6,8,3,2' id='input1' type="text">`,
 	},
+	{
+		code: `<label for="userText">Enter text:</label>
+    <input class='peleks' value='Something...' id='input1' type="text">`,
+	},
 ];
 
 // Select test by <select> in html
@@ -81,14 +85,14 @@ const solve = () => {
 
 			const sumNumbers = sum(num1, num2); // sum two numbers
 
-			result(`${num1} + ${num2} = ${sumNumbers}`, true); // send result
+			result(sumNumbers[0], sumNumbers[1]); // send result
 			break;
 
 		// Find maximum number
 		case 2:
 			const maxNum = findMaxNumber(numbersArray); // find maximum number
 
-			result(`The biggest number of ${JSON.stringify(numbersArray)} array = ${maxNum}`, true); // send result
+			result(maxNum[0], maxNum[1]); // send result
 			break;
 
 		// Palindrome
@@ -130,7 +134,7 @@ const solve = () => {
 		case 8:
 			const FibonacciSequence = Fibonacci(number); // do Fibonacci sequence
 
-			result(FibonacciSequence, true); // send result
+			result(FibonacciSequence[0], FibonacciSequence[1]); // send result
 			break;
 
 		// Case convert
@@ -145,6 +149,14 @@ const solve = () => {
 			const averageValues = statisticsAverage(numbersArray); // do statistics average values
 
 			result(averageValues[0], averageValues[1]);
+			break;
+
+		// Text analysis
+		case 11:
+			const analysisResult = textAnalysis(string);
+
+			result(analysisResult[0], analysisResult[1]);
+			break;
 	}
 };
 
@@ -165,18 +177,23 @@ const result = (text, isTrue) => {
 
 // Test 1
 const sum = (number1, number2) => {
-	return number1 + number2; // sum two numbers
+	if (isNaN(number1) || isNaN(number2)) {
+		return ['Please enter correct numbers in inputs', false];
+	}
+	return [`${number1} + ${number2} = ${number1 + number2}`, true]; // sum two numbers
 };
 
 // Test 2
 const findMaxNumber = array => {
+	if (array.length <= 1) return ['Please enter more numbers', false];
+
 	let maxNum = 0; // start num
 
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] > maxNum) maxNum = array[i];
 	}
 
-	return maxNum;
+	return [`The biggest number of ${JSON.stringify(array)} array = ${maxNum}`, true];
 };
 
 // Test 3
@@ -209,6 +226,9 @@ const evenNumber = array => {
 
 // Test 6
 const factorial = number => {
+	if (isNaN(number)) {
+		return [`Please enter only number`, false];
+	}
 	let result = 1; // minimum number
 	const initialNum = number; // number for result showing
 	if (number == 0) return [`!${number} = 1`, true];
@@ -237,6 +257,9 @@ const checkPrime = number => {
 
 // Test 8
 const Fibonacci = number => {
+	if (number > 5000) {
+		return ['Please enter number which is not bigger than 5000', false];
+	}
 	let sequence = [0, 1]; // Initial data
 
 	// [0, 1] => [0, 1, (0 + 1)] - sum latest two values before it's equals number (user input value)
@@ -244,7 +267,7 @@ const Fibonacci = number => {
 		sequence.push(sequence[sequence.length - 1] + sequence[sequence.length - 2]); // push in an array
 	}
 
-	return sequence;
+	return [sequence, true];
 };
 
 // Test 9
@@ -285,9 +308,9 @@ const statisticsAverage = array => {
 	let arrayQuadraticSum = 0;
 
 	for (let x = 0; x < array.length; x++) {
-		arraySum += array[x]; // add num to arraySum
-		arrayMultiply *= array[x]; // multiply num to arrayMultiply
-		arrayQuadraticSum += array[x] ** 2;
+		arraySum += array[x]; // add num
+		arrayMultiply *= array[x]; // multiply num
+		arrayQuadraticSum += array[x] ** 2; //do quadratic sum
 
 		if (isNaN(array[x])) {
 			return ['Your array of numbers has some errors, please check it out', false]; // return error
@@ -295,4 +318,17 @@ const statisticsAverage = array => {
 	}
 
 	return [`Increasing: ${JSON.stringify(increasingArray)}\n>> Decreasing: ${JSON.stringify(decreasingArray)}\n>> Sum: ${arraySum}\n>> Multiply: ${arrayMultiply}\n>> Average algebraic: ${arraySum / array.length}\n>> Average geometric: ${Math.pow(arrayMultiply, 1 / array.length).toFixed(2)}\n>> Average quadratic: ${Math.sqrt(arrayQuadraticSum / array.length).toFixed(2)}`, true]; // return result
+};
+
+// Test 11
+const textAnalysis = text => {
+	if (text.length <= 4) {
+		return ['Please enter text of at least 5 characters', false];
+	}
+
+	for (let u = 0; u < text.length; u++) {
+		if (text[u] in [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]) return ['Please enter text of at least 5 characters (numbers are not allowed)', false];
+	}
+
+	return [`Your text: ${text}\n>> Text length: ${text.length}`, true];
 };
