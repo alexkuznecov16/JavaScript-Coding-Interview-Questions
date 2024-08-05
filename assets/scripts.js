@@ -234,14 +234,14 @@ const reverseString = text => {
 
 // Test 5
 const evenNumber = array => {
+	if (array.length <= 0) return ['Your array of numbers has not even numbers', false];
+
 	let newArray = []; // array for even numbers
 	for (let i = 0; i < array.length; i++) {
 		if (array[i] % 2 == 0) {
 			newArray.push(array[i]); // if number is even => push it an array
 		}
 	}
-
-	if (newArray.length <= 0) return ['Your array of numbers has not even numbers', false];
 
 	return [`Array of even numbers: ${JSON.stringify(newArray)}`, true];
 };
@@ -279,7 +279,7 @@ const checkPrime = number => {
 
 // Test 8
 const Fibonacci = number => {
-	if (number > 5000) {
+	if (number > 5000 || number <= 0) {
 		return ['Please enter number which is not bigger than 5000', false];
 	}
 	let sequence = [0, 1]; // Initial data
