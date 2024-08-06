@@ -70,8 +70,61 @@ br {
   min-height: 424px;
 }
 
+.main__task-label {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.main__task-label .error {
+  position: absolute;
+  bottom: -15px;
+  left: 2px;
+  font-size: 9px;
+  color: red;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 select {
   width: max-content;
+  min-height: 35px;
+  background-color: #dcf5de;
+  padding: 0.5em;
+  border: #b2eeac 2px solid;
+  outline: none;
+  cursor: pointer;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+  border-radius: 7px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.main__task-label:after {
+  content: '';
+  border: 6px solid transparent;
+  border-top-color: #222;
+  display: inline-block;
+  position: absolute;
+  bottom: calc(35px / 4);
+  right: 10px;
+}
+
+select>option {
+  background-color: #baf4ba;
+  padding: 0.5em;
+}
+
+select>option:hover {
+  background-color: red;
 }
 
 .main__area--enter {

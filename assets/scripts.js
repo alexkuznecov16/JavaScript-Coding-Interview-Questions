@@ -55,7 +55,17 @@ const data = [
 	},
 	{
 		code: `<label for="userText">Enter array of numbers:</label>
-    <input class='peleks' value='[1, [8], 2, [10], 3, [12], 4, [14, 16, 18]]' id='input1' type="text">`,
+    <input class='peleks' value='[2, [10], 3, [12], 4, [14, 16, 18]]' id='input1' type="text">`,
+	},
+	{
+		code: `<label for="userText1">Enter k:</label>
+    <input class='peleks' value='2' id='input1' type="number"><label for="userText2">Enter n:</label>
+    <input class='peleks' value='3' id='input2' type="number">`,
+	},
+	{
+		code: `<label for="userText1">Enter k:</label>
+    <input class='peleks' value='2' id='input1' type="number"><label for="userText2">Enter n:</label>
+    <input class='peleks' value='3' id='input2' type="number">`,
 	},
 ];
 
@@ -64,14 +74,21 @@ let dateInterval = null;
 // Select test by <select> in html
 const selectTest = testIndex => {
 	const htmlElement = document.getElementsByClassName('InputsArea')[0]; // InputsArea for inputs adding
+	const errorText = document.querySelector('.error'); // error text
 
 	htmlElement.innerHTML = ''; // refresh
 
-	if (testIndex >= 0 && testIndex < data.length) {
+	if (testIndex > 0 && testIndex < data.length) {
 		const container = document.createElement('div'); // create div tag
 		container.className = 'InputsArea'; // do class name
 		container.innerHTML = data[testIndex].code; // add data (inputs, labels)
 		htmlElement.appendChild(container); // append to the div tag
+		errorText.style.color = 'green'; // not error color
+		errorText.innerHTML = 'Valid exercise'; // not error text
+		result('', true); // refresh textarea
+	} else {
+		errorText.style.color = 'red'; // error color
+		errorText.innerHTML = 'Error: invalid exercise'; // error text
 	}
 
 	return;
@@ -81,6 +98,7 @@ const selectTest = testIndex => {
 const solve = x => {
 	const testNum = parseInt(document.getElementsByTagName('select')[0].value); // get selected test index
 	if (testNum <= 0) {
+		document.getElementsByClassName('error')[0].innerHTML = 'Error: invalid exercise';
 		result('Error, please choose correct exercise', false); // error
 		return;
 	}
@@ -88,6 +106,7 @@ const solve = x => {
 	const input1 = document.getElementById('input1')?.value; // each time we have at least one input, therefore we can get it's value here
 	const number = parseInt(input1); // in our cases (switch - case) we have at least one case with numbers
 	const string = input1; // string variable
+	const number2 = parseInt(document.getElementById('input2')?.value);
 	const numbersArray = input1?.split(',').map(Number); // numbers array after mapping
 	// conditional statements
 	switch (testNum) {
@@ -199,6 +218,18 @@ const solve = x => {
 			const nestedValues = nestedArray(JSON.parse(string));
 
 			result(nestedValues[0], nestedValues[1]);
+
+		// Combination
+		case 15:
+			const combinations = combination(number, number2);
+
+			result(combinations[0], combinations[1]);
+
+		// Combination
+		case 16:
+			const placements = placement(number, number2);
+			console.log(number, number2);
+			result(placements[0], placements[1]);
 	}
 };
 
@@ -215,7 +246,7 @@ const result = (text, isTrue) => {
 	return;
 };
 
-//! Area for solving ///////////////////////////////////////////////////////////////////
+//! Area for solving ================================================================================================================================================================================================================================================
 
 // Test 1
 const sum = (number1, number2) => {
@@ -248,8 +279,14 @@ const palindrome = text => {
 
 // Test 4
 const reverseString = text => {
-	reversedText = text.split('').reverse().join(''); // reverse text
-	return `Reversed string: ${reversedText}`;
+	const textArray = text.split(''); // do array of text
+	let reversedText = []; // initial result array (reversed text by FOR loop)
+
+	for (let x = textArray.length - 1; x >= 0; x--) {
+		reversedText.push(textArray[x]); // add element into reversed text
+	}
+
+	return `Reversed string: ${reversedText.join('')}`;
 };
 
 // Test 5
@@ -271,6 +308,7 @@ const factorial = number => {
 	if (isNaN(number)) {
 		return [`Please enter only number`, false];
 	}
+
 	let result = 1; // minimum number
 	const initialNum = number; // number for result showing
 	if (number == 0) return [`!${number} = 1`, true];
@@ -343,8 +381,8 @@ const statisticsAverage = array => {
 	if (array.length <= 1) {
 		return ['Please enter some numbers (min: 2)', false];
 	}
-	const increasingArray = array.sort(); // array (a - b) sequence
-	const decreasingArray = array.sort((a, b) => b - a); // array (b - a) sequence
+	const increasingArray = [...array].sort(); // array (a - b) sequence
+	const decreasingArray = [...array].sort((a, b) => b - a); // array (b - a) sequence
 	let arraySum = 0; // all array numbers sum
 	let arrayMultiply = 1; // all array number multiply
 	let arrayQuadraticSum = 0;
@@ -356,6 +394,8 @@ const statisticsAverage = array => {
 
 		if (isNaN(array[x])) {
 			return ['Your array of numbers has some errors, please check it out', false]; // return error
+		} else if (array[x] < 0) {
+			return ['Numbers cannot be less than 0, please check it out', false];
 		}
 	}
 
@@ -426,25 +466,57 @@ const nestedArray = array => {
 		return ['Please enter more array values', false];
 	}
 	let maxResult = 0; // initial max result
-	let minResult = 1; // initial min result
 
 	array.map((item, index) => {
 		if (typeof item == 'object') {
 			for (let x = 0; x < item.length; x++) {
 				if (item[x] > maxResult) {
 					maxResult = item[x];
-				} else if (item[x] < minResult) {
-					minResult = item[x];
 				}
 			}
 		} else if (item > maxResult) {
 			maxResult = item;
-		} else if (item < minResult) {
-			minResult = item;
 		} else if (isNaN(item)) {
 			return ['Please enter only numbers', false];
 		}
 	});
 
-	return [`Your array max = ${maxResult}; min = ${minResult}`, true];
+	return [`Your array max = ${maxResult}`, true];
+};
+
+// Function for (test number 15 and 16)
+const factorialFind = num => {
+	let result = 1;
+	while (num > 1) {
+		result *= num;
+		num--;
+	}
+	return result;
+};
+
+// Test 15
+const combination = (k, n) => {
+	if (isNaN(n) || isNaN(k) || n < 1 || n > 100 || k < 1 || k > 100) {
+		return ['Please enter only numbers between 1 and 100'];
+	}
+
+	// factorial results
+	const factorialK = factorialFind(k);
+	const factorialN = factorialFind(n);
+	const factorialNK = factorialFind(n - k);
+
+	return [factorialN / (factorialK * factorialNK), true];
+};
+
+// Test 16
+const placement = (k, n) => {
+	if (isNaN(n) || isNaN(k) || n < 1 || n > 100 || k < 1 || k > 100) {
+		return ['Please enter only numbers between 1 and 100'];
+	}
+
+	// factorial results
+	const factorialN = factorialFind(n);
+	const factorialNK = factorialFind(n - k);
+
+	return [factorialN / factorialNK, true];
 };
