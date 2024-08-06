@@ -44,3 +44,15 @@ algorithms in JavaScript. They expect the candidate to consider edge cases and h
 ## 9. Write a JavaScript program to convert a string to title case (capitalize the first letter of each word).
 Interviewers analyze the candidate’s ability to break down a problem into manageable steps and
 demonstrate knowledge of string manipulation, looping, and basic JavaScript functions.
+
+## 10. Write a JavaScript function that takes an array and returns various statistical measures (geometric mean, quadratic mean, arithmetic mean) and the array sorted in ascending and descending order.
+Interviewers look for a candidate's understanding of different mathematical concepts and their ability to implement them in JavaScript. They also assess the ability to handle and manipulate arrays efficiently.
+
+## 11. Write a JavaScript program to analyze a given text and output various properties.
+This question assesses the candidate's ability to manipulate and analyze strings, arrays, and other data structures in JavaScript.
+
+## 12. Write a JavaScript program to get the current date and time and update it every second.
+Interviewers evaluate the candidate’s understanding of date and time manipulation in JavaScript, as well as their ability to work with asynchronous functions and intervals.
+
+## 13. Write a JavaScript function to check if a given number is an Armstrong number.
+This question helps assess the candidate's knowledge of mathematical concepts and their ability to implement complex algorithms in JavaScript.
