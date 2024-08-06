@@ -51,7 +51,7 @@ Interviewers look for a candidate's understanding of different mathematical conc
 ## 11. Write a JavaScript program to analyze a given text and output various properties.
 This question assesses the candidate's ability to manipulate and analyze strings, arrays, and other data structures in JavaScript.
 
-## 12. Write a JavaScript program to get the current date and time and update it every second.
+## 12. Write a JavaScript program to get the current date and time and update it.
 Interviewers evaluate the candidate’s understanding of date and time manipulation in JavaScript, as well as their ability to work with asynchronous functions and intervals.
 
 ## 13. Write a JavaScript function to check if a given number is an Armstrong number.
