@@ -71,6 +71,10 @@ const data = [
 		code: `<label for="userText">Enter n:</label>
     <input class='peleks' value='4' id='input1' type="number">`,
 	},
+	{
+		code: `<label for="userText">Enter array of numbers with 0:</label>
+    <input class='peleks' value='0, 8, 2, 0, 1' id='input1' type="text">`,
+	},
 ];
 
 let dateInterval = null;
@@ -245,6 +249,12 @@ const solve = x => {
 
 			result(fullCombs[0], fullCombs[1]);
 			break;
+
+		// All zeros place in the end of array
+		case 18:
+			const placeZeros = arrayZeros(numbersArray);
+
+			result(placeZeros[0], placeZeros[1]);
 	}
 };
 
@@ -535,4 +545,25 @@ const placement = (k, n) => {
 	const factorialNK = factorialFind(n - k);
 
 	return [factorialN / factorialNK, true];
+};
+
+// Test 17
+const arrayZeros = array => {
+	if (array.length <= 1) {
+		return ['Please enter some numbers (min: 2)', false];
+	}
+
+	let zeroCounter = 0;
+
+	for (let e = 0; e < array.length; e++) {
+		if (array[e] == 0) {
+			array.splice(e, 1); // splice this array item (remove)
+			zeroCounter++; // add to counter (for zero is in array checking)
+			array.push(0); // add in the end
+		}
+	}
+
+	if (zeroCounter <= 0) return ['Please enter zero', false];
+
+	return [`Zero placed in the end of array: ${JSON.stringify(array)}`, true];
 };
