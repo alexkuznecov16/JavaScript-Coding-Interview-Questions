@@ -67,6 +67,10 @@ const data = [
     <input class='peleks' value='2' id='input1' type="number"><label for="userText2">Enter n:</label>
     <input class='peleks' value='3' id='input2' type="number">`,
 	},
+	{
+		code: `<label for="userText">Enter n:</label>
+    <input class='peleks' value='4' id='input1' type="number">`,
+	},
 ];
 
 let dateInterval = null;
@@ -212,23 +216,35 @@ const solve = x => {
 			const solveArmstrong = Armstrong(number);
 
 			result(solveArmstrong[0], solveArmstrong[1]);
+			break;
 
 		// Nested array
 		case 14:
 			const nestedValues = nestedArray(JSON.parse(string));
 
 			result(nestedValues[0], nestedValues[1]);
+			break;
 
 		// Combination
 		case 15:
 			const combinations = combination(number, number2);
 
 			result(combinations[0], combinations[1]);
+			break;
 
 		// Combination
 		case 16:
 			const placements = placement(number, number2);
+
 			result(placements[0], placements[1]);
+			break;
+
+		// Full combinations
+		case 17:
+			const fullCombs = factorial(number);
+
+			result(fullCombs[0], fullCombs[1]);
+			break;
 	}
 };
 
@@ -485,6 +501,7 @@ const nestedArray = array => {
 
 // Function for (test number 15 and 16)
 const factorialFind = num => {
+	if (num === 0) return 1;
 	let result = 1;
 	while (num > 1) {
 		result *= num;
