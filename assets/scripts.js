@@ -53,6 +53,10 @@ const data = [
 		code: `<label for="userText">Enter number:</label>
     <input class='peleks' value='123' id='input1' type="number" min="1">`,
 	},
+	{
+		code: `<label for="userText">Enter array of numbers:</label>
+    <input class='peleks' value='[1, [8], 2, [10], 3, [12], 4, [14, 16, 18]]' id='input1' type="text">`,
+	},
 ];
 
 let dateInterval = null;
@@ -189,6 +193,12 @@ const solve = x => {
 			const solveArmstrong = Armstrong(number);
 
 			result(solveArmstrong[0], solveArmstrong[1]);
+
+		// Nested array
+		case 14:
+			const nestedValues = nestedArray(JSON.parse(string));
+
+			result(nestedValues[0], nestedValues[1]);
 	}
 };
 
@@ -408,4 +418,33 @@ const Armstrong = number => {
 	} else {
 		return [`${number} is not an Armstrong number`, false];
 	}
+};
+
+// Test 14
+const nestedArray = array => {
+	if (array.length <= 1) {
+		return ['Please enter more array values', false];
+	}
+	let maxResult = 0; // initial max result
+	let minResult = 1; // initial min result
+
+	array.map((item, index) => {
+		if (typeof item == 'object') {
+			for (let x = 0; x < item.length; x++) {
+				if (item[x] > maxResult) {
+					maxResult = item[x];
+				} else if (item[x] < minResult) {
+					minResult = item[x];
+				}
+			}
+		} else if (item > maxResult) {
+			maxResult = item;
+		} else if (item < minResult) {
+			minResult = item;
+		} else if (isNaN(item)) {
+			return ['Please enter only numbers', false];
+		}
+	});
+
+	return [`Your array max = ${maxResult}; min = ${minResult}`, true];
 };
