@@ -228,7 +228,6 @@ const solve = x => {
 		// Combination
 		case 16:
 			const placements = placement(number, number2);
-			console.log(number, number2);
 			result(placements[0], placements[1]);
 	}
 };
