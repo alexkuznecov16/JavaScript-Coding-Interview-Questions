@@ -75,6 +75,10 @@ const data = [
 		code: `<label for="userText">Enter array of numbers with 0:</label>
     <input class='peleks' value='0, 8, 2, 0, 1' id='input1' type="text">`,
 	},
+	{
+		code: `<label for="userText">Enter array:</label>
+    <input class='peleks' value='AB' id='input1' type="text">`,
+	},
 ];
 
 let dateInterval = null;
@@ -255,6 +259,12 @@ const solve = x => {
 			const placeZeros = arrayZeros(numbersArray);
 
 			result(placeZeros[0], placeZeros[1]);
+
+		// Permutation
+		case 19:
+			const combs = permutation(string);
+
+			result(combs[0], combs[1]);
 	}
 };
 
@@ -566,4 +576,82 @@ const arrayZeros = array => {
 	if (zeroCounter <= 0) return ['Please enter zero', false];
 
 	return [`Zero placed in the end of array: ${JSON.stringify(array)}`, true];
+};
+
+// Test 19
+const permutation = string => {
+	// recursion function
+	const permutate = str => {
+		if (str.length == 1) {
+			return [str]; // just returns string
+		} else if (str.length <= 0 || str == '') {
+			return ['Please enter some value!', false]; // returns error text
+		}
+
+		let permutations = []; // permutations array (combinations)
+
+		// for-loop => iterate each element
+		for (let i = 0; i < str.length; i++) {
+			const permChar = str[i]; // text character
+			let remainingChars = str.slice(0, i) + str.slice(i + 1); // here I slice two elements and after it send to the recursion
+
+			let remainingPerms = permutate(remainingChars); // do recursion
+
+			/* str = 'ABC'
+             
+				!1) slices:
+				str.slice(0, i)  //* i = 0, str.slice(0, 0) = ''
+				str.slice(i + 1) = 'BC'  //* str.slice(0 + 1) = 'BC'
+				remainingChars = '' + 'BC' = 'BC'
+				
+				!2) send it to function (recursion)
+					permutate('BC')
+
+					* After recursion call, get perms for 'BC'
+					* For example, if permutate('BC') returns ['BC', 'CB']
+					* We perm 'A' with each perm 'BC' and 'CB'
+					* Result for this step: ['ABC', 'ACB']
+
+
+				!3) step: i = 1
+
+					* i = 1
+					* permChar = 'B'
+					* remainingChars = 'AC'
+					* Recursively call permutate('AC')
+					
+					* After recursion call, get perms for 'AC'
+					* permutate('AC') returns ['AC', 'CA']
+					* We perm 'B' with each perm 'AC' and 'CA'
+					* Result for this step: ['BAC', 'BCA']
+
+
+				!4) step: i = 2
+
+					* i = 2
+					* permChar = 'C'
+					* remainingChars = 'AB'
+					* Recursively call permutate('AB')
+					
+					* After recursion call, get perms for 'AB'
+					* permutate('AB') returns ['AB', 'BA']
+					* We perm 'C' with each perm 'AB' and 'BA'
+					* Result for this step: ['CAB', 'CBA']
+			*/
+
+			// iterate each perm of remaining
+			for (const perm of remainingPerms) {
+				permutations.push(permChar + perm); // push to array textCharacter + permutation
+			}
+		}
+		return permutations;
+	};
+
+	const perms = permutate(string); // result
+
+	if (perms[0] === 'Please enter some value!') {
+		return [perms[0], false]; // if invalid result
+	}
+
+	return [JSON.stringify(perms), true]; // if valid result
 };
