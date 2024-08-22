@@ -79,9 +79,15 @@ const data = [
 		code: `<label for="userText">Enter array:</label>
     <input class='peleks' value='AB' id='input1' type="text">`,
 	},
+	{
+		code: `<label for="input1">Enter a:</label>
+    <input class='peleks' value='2' id='input1' type="number"><label for="input2">Enter b:</label>
+    <input class='peleks' value='4' id='input2' type="number"><label for="input3">Enter c:</label>
+    <input class='peleks' value='6' id='input3' type="number">`,
+	},
 ];
 
-let dateInterval = null;
+let dateInterval = null; // initial date
 
 // Select test by <select> in html
 const selectTest = testIndex => {
@@ -119,6 +125,7 @@ const solve = x => {
 	const number = parseInt(input1); // in our cases (switch - case) we have at least one case with numbers
 	const string = input1; // string variable
 	const number2 = parseInt(document.getElementById('input2')?.value);
+	const number3 = parseInt(document.getElementById('input3')?.value);
 	const numbersArray = input1?.split(',').map(Number); // numbers array after mapping
 	// conditional statements
 	switch (testNum) {
@@ -265,6 +272,12 @@ const solve = x => {
 			const combs = permutation(string);
 
 			result(combs[0], combs[1]);
+
+		// Quadratic equation
+		case 20:
+			const equation = quadraticEquation(number, number2, number3);
+
+			result(equation[0], equation[1]);
 	}
 };
 
@@ -654,4 +667,24 @@ const permutation = string => {
 	}
 
 	return [JSON.stringify(perms), true]; // if valid result
+};
+
+// Test 20
+const quadraticEquation = (a, b, c) => {
+	const discriminant = b ** 2 - 4 * a * c;
+	let x1, x2;
+	if (discriminant < 0) {
+		const part1 = (-b / (2 * a)).toFixed(2);
+		const part2 = (Math.sqrt(-discriminant) / (2 * a)).toFixed(2);
+		x1 = `${part1} + ${part2}i`;
+		x2 = `${part1} - ${part2}i`;
+		return [`x1 = ${x1}; x2 = ${x2};`, true];
+	} else if (discriminant == 0) {
+		x1 = (-b / (2 * a)).toFixed(2);
+		return [`x = ${x1}`, true];
+	} else {
+		x1 = ((-b + Math.sqrt(discriminant)) / (2 * a)).toFixed(2);
+		x2 = ((-b - Math.sqrt(discriminant)) / (2 * a)).toFixed(2);
+		return [`x1 = ${x1}; x2 = ${x2};`, true];
+	}
 };
