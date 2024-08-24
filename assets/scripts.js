@@ -581,7 +581,7 @@ const arrayZeros = array => {
 
 	for (let e = 0; e < array.length; e++) {
 		if (array[e] != 0) {
-			newArray.push(e);
+			newArray.push(array[e]);
 		}
 	}
 
