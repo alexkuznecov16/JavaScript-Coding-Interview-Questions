@@ -266,18 +266,21 @@ const solve = x => {
 			const placeZeros = arrayZeros(numbersArray);
 
 			result(placeZeros[0], placeZeros[1]);
+			break;
 
 		// Permutation
 		case 19:
 			const combs = permutation(string);
 
 			result(combs[0], combs[1]);
+			break;
 
 		// Quadratic equation
 		case 20:
 			const equation = quadraticEquation(number, number2, number3);
 
 			result(equation[0], equation[1]);
+			break;
 	}
 };
 
@@ -580,11 +583,12 @@ const arrayZeros = array => {
 	let newArray = [];
 
 	for (let e = 0; e < array.length; e++) {
-		if (array[e] != 0) {
+		if (array[e] == 0) {
+			zeroCounter++;
+		} else {
 			newArray.push(array[e]);
 		}
 	}
-
 	for (let e = 0; e < array.length; e++) {
 		if (array[e] == 0) {
 			zeroCounter++; // add to counter (for zero is in array checking)
@@ -593,6 +597,10 @@ const arrayZeros = array => {
 	}
 
 	if (zeroCounter <= 0) return ['Please enter zero', false];
+
+	for (let i = 0; i < zeroCounter; i++) {
+		newArray.push(0);
+	}
 
 	return [`Zero placed in the end of array: ${JSON.stringify(newArray)}`, true];
 };
