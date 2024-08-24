@@ -589,12 +589,6 @@ const arrayZeros = array => {
 			newArray.push(array[e]);
 		}
 	}
-	for (let e = 0; e < array.length; e++) {
-		if (array[e] == 0) {
-			zeroCounter++; // add to counter (for zero is in array checking)
-			newArray.push(0); // add in the end
-		}
-	}
 
 	if (zeroCounter <= 0) return ['Please enter zero', false];
 
