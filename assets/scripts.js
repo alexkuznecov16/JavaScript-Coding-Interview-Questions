@@ -594,7 +594,7 @@ const arrayZeros = array => {
 
 	if (zeroCounter <= 0) return ['Please enter zero', false];
 
-	return [`Zero placed in the end of array: ${JSON.stringify(array)}`, true];
+	return [`Zero placed in the end of array: ${JSON.stringify(newArray)}`, true];
 };
 
 // Test 19
