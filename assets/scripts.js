@@ -582,7 +582,7 @@ const arrayZeros = array => {
 		if (array[e] == 0) {
 			array.splice(e, 1); // splice this array item (remove)
 			zeroCounter++; // add to counter (for zero is in array checking)
-			array.push(0); // add in the end
+			array.push(e); // add in the end
 		}
 	}
 
