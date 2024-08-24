@@ -577,12 +577,18 @@ const arrayZeros = array => {
 	}
 
 	let zeroCounter = 0;
+	let newArray = [];
+
+	for (let e = 0; e < array.length; e++) {
+		if (array[e] != 0) {
+			newArray.push(e);
+		}
+	}
 
 	for (let e = 0; e < array.length; e++) {
 		if (array[e] == 0) {
-			array.splice(e, 1); // splice this array item (remove)
 			zeroCounter++; // add to counter (for zero is in array checking)
-			array.push(e); // add in the end
+			newArray.push(0); // add in the end
 		}
 	}
 
